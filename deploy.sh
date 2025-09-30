@@ -120,13 +120,15 @@ module.exports = {
     script: 'npm',
     args: 'start',
     cwd: '$APP_DIR',
-    instances: 1,
+    instances: 'max', // Use all CPU cores
     autorestart: true,
     watch: false,
-    max_memory_restart: '1G',
+    max_memory_restart: '4G', // Increased memory limit
+    node_args: '--max-old-space-size=4096', // Increase Node.js heap size
     env: {
       NODE_ENV: 'production',
-      PORT: 1337
+      PORT: 1337,
+      NODE_OPTIONS: '--max-old-space-size=4096'
     }
   }]
 };

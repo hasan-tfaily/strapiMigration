@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # PostgreSQL Database
@@ -39,6 +39,7 @@ services:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       API_TOKEN_SALT: ${API_TOKEN_SALT}
       TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      NODE_OPTIONS: --max-old-space-size=4096
     volumes:
       - ./public/uploads:/app/public/uploads
     ports:
@@ -47,6 +48,12 @@ services:
       - postgres
     networks:
       - strapi_network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
 
   # Nginx Reverse Proxy
   nginx:
