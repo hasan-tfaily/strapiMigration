@@ -105,15 +105,15 @@ if grep -q "your_secure_password_here" .env.production; then
     API_TOKEN_SALT=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))" 2>/dev/null || echo "api_token_salt")
     TRANSFER_TOKEN_SALT=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))" 2>/dev/null || echo "transfer_token_salt")
     
-    # Update environment file
-    sed -i "s/your_app_key_1/$APP_KEY_1/g" .env.production
-    sed -i "s/your_app_key_2/$APP_KEY_2/g" .env.production
-    sed -i "s/your_app_key_3/$APP_KEY_3/g" .env.production
-    sed -i "s/your_app_key_4/$APP_KEY_4/g" .env.production
-    sed -i "s/your_jwt_secret_here/$JWT_SECRET/g" .env.production
-    sed -i "s/your_admin_jwt_secret_here/$ADMIN_JWT_SECRET/g" .env.production
-    sed -i "s/your_api_token_salt_here/$API_TOKEN_SALT/g" .env.production
-    sed -i "s/your_transfer_token_salt_here/$TRANSFER_TOKEN_SALT/g" .env.production
+    # Update environment file with proper escaping
+    sed -i "s|your_app_key_1|$APP_KEY_1|g" .env.production
+    sed -i "s|your_app_key_2|$APP_KEY_2|g" .env.production
+    sed -i "s|your_app_key_3|$APP_KEY_3|g" .env.production
+    sed -i "s|your_app_key_4|$APP_KEY_4|g" .env.production
+    sed -i "s|your_jwt_secret_here|$JWT_SECRET|g" .env.production
+    sed -i "s|your_admin_jwt_secret_here|$ADMIN_JWT_SECRET|g" .env.production
+    sed -i "s|your_api_token_salt_here|$API_TOKEN_SALT|g" .env.production
+    sed -i "s|your_transfer_token_salt_here|$TRANSFER_TOKEN_SALT|g" .env.production
     
     print_status "Secure secrets generated and updated!"
 fi
