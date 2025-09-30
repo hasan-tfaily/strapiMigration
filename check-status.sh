@@ -46,7 +46,16 @@ echo ""
 # 3. Check Port Usage
 print_status "3. Port 1337 Status:"
 echo "----------------------------------------"
-netstat -tlnp | grep 1337 || echo "Port 1337 not in use"
+# Try different commands to check port
+if command -v netstat &> /dev/null; then
+    netstat -tlnp | grep 1337 || echo "Port 1337 not in use"
+elif command -v ss &> /dev/null; then
+    ss -tlnp | grep 1337 || echo "Port 1337 not in use"
+elif command -v lsof &> /dev/null; then
+    lsof -i :1337 || echo "Port 1337 not in use"
+else
+    echo "No port checking tools available"
+fi
 echo ""
 
 # 4. Check Database
